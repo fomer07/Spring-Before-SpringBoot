@@ -1,6 +1,6 @@
 # What is the Spring Bean Lifecycle ? 
 
-Spring manages the lifecycle of beans in the container.The key stages include: 
+Spring manages the lifecycle of beans in the container. The key stages include: 
 
 **1. Bean Instantiation** - Spring creates the bean. 
 

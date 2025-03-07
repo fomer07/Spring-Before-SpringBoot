@@ -1,14 +1,12 @@
 package com.example.config;
 
-import com.example.service.MessageService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
+@ComponentScan(basePackages = "com.example")  // Scans for @Component, @Service, @Aspect
+@EnableAspectJAutoProxy // Enables Spring AOP
 public class AppConfig {
-
-    @Bean
-    public MessageService messageService() {
-        return new MessageService();
-    }
 }

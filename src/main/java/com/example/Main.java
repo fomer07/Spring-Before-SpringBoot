@@ -2,18 +2,20 @@ package com.example;
 
 
 import com.example.config.AppConfig;
-import com.example.service.MessageService;
+import com.example.service.UserService;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
     public static void main(String[] args) {
-       // Load Spring Context
-        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+       // Load Spring context
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        // Retrieve Bean
-        MessageService messageService = context.getBean(MessageService.class);
-        System.out.println(messageService.getMessage());
+        // Retrieve UserService Bean
+        UserService userService = context.getBean(UserService.class);
+        userService.createUser("Jack Sparrow");
 
-        context.close();
+        // Close context
+        ((AnnotationConfigApplicationContext) context).close();
     }
 }

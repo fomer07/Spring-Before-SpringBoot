@@ -4,6 +4,7 @@ package com.example;
 import com.example.config.AppConfig;
 import com.example.dao.UserDAO;
 import com.example.model.User;
+import com.example.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -14,27 +15,22 @@ public class Main {
         // Load Spring Context
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        // Get UserDAO Bean
-        UserDAO userDAO = context.getBean(UserDAO.class);
+        // Get UserService Bean
+        UserService userService = context.getBean(UserService.class);
 
-        // Insert a new user
-        User user = new User(0, "Jack Sparrow", "jack@sparrow.com");
-        userDAO.save(user);
+        // Successful transaction
+        try {
+            userService.registerUser("Jack Sparrow", "jack@sparrow.com");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
-        // Retrieve user by ID
-        User fetchedUser = userDAO.getById(1);
-        System.out.println("Fetched User: " + fetchedUser);
-
-        // Retrieve all users
-        List<User> users = userDAO.getAll();
-        System.out.println("All Users: " + users);
-
-        // Update user
-        fetchedUser.setName("Captain Jack Sparrow");
-        userDAO.update(fetchedUser);
-
-        // Delete user
-        //userDAO.delete(1);
+        // Failing transaction (should rollback)
+        try {
+            userService.registerUser("Hector Barbossa", "fail@pirate.com");
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
         // Close context
         ((AnnotationConfigApplicationContext) context).close();
